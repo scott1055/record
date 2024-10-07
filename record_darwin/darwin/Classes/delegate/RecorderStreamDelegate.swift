@@ -70,6 +70,13 @@ class RecorderStreamDelegate: NSObject, AudioRecordingStreamDelegate {
     audioEngine?.inputNode.removeTap(onBus: bus)
     audioEngine?.stop()
     audioEngine = nil
+
+    #if os(iOS)
+    do {
+      try endAVAudioSession()
+    } catch {
+    }
+    #endif    
     
     completionHandler(nil)
   }
