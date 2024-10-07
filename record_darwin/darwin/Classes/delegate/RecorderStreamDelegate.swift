@@ -66,19 +66,16 @@ class RecorderStreamDelegate: NSObject, AudioRecordingStreamDelegate {
     self.audioEngine = audioEngine
   }
   
-  func stop(completionHandler: @escaping (String?) -> ()) {
+  func stop(completionHandler: @escaping (String?) -> ()) throws {
     audioEngine?.inputNode.removeTap(onBus: bus)
     audioEngine?.stop()
-    audioEngine = nil
-
-    #if os(iOS)
-    do {
-      try endAVAudioSession()
-    } catch {
-    }
-    #endif    
+    audioEngine = nil 
     
     completionHandler(nil)
+
+    #if os(iOS)
+    try endAVAudioSession()
+    #endif   
   }
   
   func pause() {
