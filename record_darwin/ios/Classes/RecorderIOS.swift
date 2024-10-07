@@ -108,11 +108,12 @@ extension AudioRecordingDelegate {
     }
   }
 
-  func endAVAudioSession() {
+  func endAVAudioSession() throws {
     let audioSession = AVAudioSession.sharedInstance()
     do {
-      try audioSession.setActive(false)
+      try audioSession.setActive(false, options: .notifyOthersOnDeactivation)
     } catch {
+      throw RecorderError.error(message: "Failed to deactivate session", details: "setInput: \(error.localizedDescription)")
     }
   }
 }
