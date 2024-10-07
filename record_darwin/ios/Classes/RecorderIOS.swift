@@ -107,4 +107,12 @@ extension AudioRecordingDelegate {
       pause()
     }
   }
+
+  func endAVAudioSession() {
+    let audioSession = AVAudioSession.sharedInstance()
+    do {
+      try audioSession.setActive(false)
+    } catch {
+    }
+  }
 }
